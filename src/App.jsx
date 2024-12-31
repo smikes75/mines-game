@@ -16,6 +16,32 @@ function App() {
  );
  const [timer, setTimer] = useState(null);
 
+ const handleTouchStart = (e, row, col) => {
+   const touch = e.touches[0];
+   const startTime = new Date().getTime();
+   const startX = touch.clientX;
+   const startY = touch.clientY;
+
+   const handleTouchEnd = (e) => {
+     const endTime = new Date().getTime();
+     const endX = e.changedTouches[0].clientX;
+     const endY = e.changedTouches[0].clientY;
+     const duration = endTime - startTime;
+
+     if (Math.abs(endX - startX) < 5 && Math.abs(endY - startY) < 5) {
+       if (duration > 500) {
+         toggleFlag(row, col);
+       } else {
+         revealCell(row, col);
+       }
+     }
+
+     document.removeEventListener('touchend', handleTouchEnd);
+   };
+
+   document.addEventListener('touchend', handleTouchEnd);
+ };
+
  useEffect(() => {
    if (gameStarted && !gameOver && !gameWon) {
      const t = setInterval(() => {
@@ -181,9 +207,9 @@ function App() {
  return (
    <div className="game-container">
      <div className="game-header">
-       <div>🚩 {mineCount - flagsPlaced}</div>
-       <div>⏱️ {time}s</div>
-       <div>🏆 {bestTime}s</div>
+       <div><span>🚩</span> {mineCount - flagsPlaced}</div>
+       <div><span>⏱️</span> {time}s</div>
+       <div><span>🏆</span> {bestTime}s</div>
        <button
          onClick={initializeBoard}
          className="new-game-button"
@@ -204,6 +230,7 @@ function App() {
                  e.preventDefault();
                  toggleFlag(rowIndex, colIndex);
                }}
+               onTouchStart={(e) => handleTouchStart(e, rowIndex, colIndex)}
              >
                {cell.isRevealed ? (
                  cell.isMine ? '💣' : 
