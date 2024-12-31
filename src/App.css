@@ -1,3 +1,4 @@
+/* App.css */
 * {
   margin: 0;
   padding: 0;
@@ -24,13 +25,12 @@ body {
 }
 
 .game-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 1rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   margin-bottom: 1.5rem;
-  padding: 0 1rem;
 }
 
 .game-header div {
@@ -38,15 +38,29 @@ body {
   font-weight: bold;
   background: #3d3d3d;
   color: #ffffff;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 0;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+}
+
+.game-header div span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.game-header div img,
+.game-header div svg {
+  width: 24px;
+  height: 24px;
 }
 
 .new-game-button {
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
   color: white;
   border: none;
@@ -55,6 +69,8 @@ body {
   font-size: 1rem;
   font-weight: 600;
   transition: all 0.2s ease;
+  min-width: 120px;
+  text-align: center;
 }
 
 .new-game-button:hover {
